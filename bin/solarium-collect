@@ -1,0 +1,55 @@
+#!/usr/bin/env ruby
+# Solarium (C) 2017 Peter "SaberUK" Powell <petpow@saberuk.com>
+
+APP_ROOT = File.dirname __dir__
+if Dir.exist? "#{APP_ROOT}/.git"
+	$LOAD_PATH.unshift "#{APP_ROOT}/lib"
+end
+
+%w(solarium trollop).each do |lib|
+	begin
+		require lib
+	rescue ::Exception => error
+		STDERR.puts "A fatal error was encountered whilst loading #{lib}:"
+		STDERR.puts "#{error.class}: #{error.message}"
+		exit 1
+	end
+end
+
+APP_NAME = File.basename $PROGRAM_NAME
+options = Trollop::options do
+	banner "Usage: #{APP_NAME} [OPTIONS]"
+	version Solarium::VERSION
+
+	opt :database_url, 'The URL for connecting to the SQL database', default: 'sqlite://production.sq3'
+	opt :envoy_url, 'The URL of the Envoy web interface', default: 'http://192.168.1.200/'
+	opt :print_stats, 'Print generation statistics after collection', default: false	
+end
+
+Trollop::die :database_url, 'is not a valid URL' unless options[:database_url] =~ /^#{URI.regexp}$/
+Trollop::die :envoy_url, 'is not a valid URL' unless options[:envoy_url] =~ /^#{URI.regexp}$/
+
+collector = Solarium::Collector.new options[:envoy_url]
+unless collector.error.nil?
+	STDERR.puts "A fatal error was encountered whilst collecting data:"
+	STDERR.puts "#{collector.error.class}: #{collector.error.message}"
+	exit 1
+end
+
+if options[:print_stats]
+	puts <<~STATISTICS
+		== Generation Statistics ==
+		Currently: #{collector.now} watts
+		Today: #{collector.today} watt hours
+		Past Week: #{collector.week} watt hours
+		Since Installation: #{collector.lifetime} watt hours
+	STATISTICS
+end
+
+database = Solarium::Database.new options[:database_url]
+unless database.error.nil?
+	STDERR.puts "A fatal error was encountered whilst connecting to the database:"
+	STDERR.puts "#{database.error.class}: #{database.error.message}"
+	exit 1
+end
+database.insert collector
