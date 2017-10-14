@@ -31,6 +31,16 @@ module Solarium
 			@connection[:solarium].insert row
 		end
 
+		# Public: Reads the specified number of days worth of data from the database.
+		#
+		# days - The number of days worth of data to read.
+		def select_days days
+			data = @connection[:solarium].where do
+				time > DateTime.now - days
+			end
+			return data.to_a
+		end
+
 		# Internal: Connects to the database and creates the table if required.
 		#
 		# url - The URL for connecting to the SQL database.

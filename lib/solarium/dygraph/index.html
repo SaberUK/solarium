@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>Solarium Power Generation Report</title>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dygraph/2.0.0/dygraph.min.css"/>
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css">
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/dygraph/2.0.0/dygraph.min.js"></script>
+		<style>
+			body {
+				padding: 20px;
+			}
+			hr {
+				margin-bottom: 50px;
+			}
+			.solarium-chart {
+				font-family: sans-serif;
+				font-size: 14px;
+				height: 500px;
+				width: 100%;
+			}
+		</style>
+		<script type="text/javascript">
+			window.onload = function() {
+				const datasets = {
+					'Generation': 'generation',
+					'Today':      'today',
+					'Past Week':  'week',
+					'Lifetime':   'lifetime',
+				}
+				Object.keys(datasets).forEach(function(title) {
+					const element = document.getElementById(`solarium-${datasets[title]}`);
+					new Dygraph(element, `${datasets[title]}.csv`, {
+						fillGraph: true,
+						labelsSeparateLines: true,
+						legend: 'always',
+						title: title,
+					});
+				});
+			};
+		</script>
+	</head>
+	<body>
+		<div id="solarium-container">
+			<div class="solarium-chart" id="solarium-generation"></div>
+			<hr/>
+			<div class="solarium-chart" id="solarium-today"></div>
+			<hr/>
+			<div class="solarium-chart" id="solarium-week"></div>
+			<hr/>
+			<div class="solarium-chart" id="solarium-lifetime"></div>
+		</div>
+	</body>
+</html>
