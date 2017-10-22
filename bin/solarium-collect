@@ -21,7 +21,7 @@ options = Trollop::options do
 	banner "Usage: #{APP_NAME} [OPTIONS]"
 	version Solarium::VERSION
 
-	opt :database_url, 'The URL for connecting to the SQL database', default: 'sqlite://production.sq3'
+	opt :database_url, 'The URL for connecting to the SQL database', default: 'sqlite://solarium.sq3'
 	opt :envoy_url, 'The URL of the Envoy web interface', default: 'http://192.168.1.200/'
 	opt :print_stats, 'Print generation statistics after collection', default: false	
 end
