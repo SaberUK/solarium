@@ -6,7 +6,7 @@ module Solarium
 	VERSION_MAJOR = 0
 
 	# Public: The version number which is incremented when new features are added.
-	VERSION_MINOR = 1
+	VERSION_MINOR = 2
 
 	# Public: The version number which is incremented when bugs are fixed.
 	VERSION_PATCH = 0
