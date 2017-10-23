@@ -8,7 +8,7 @@ Gem::Specification.new do |s|
 	s.summary     = 'Enphase Envoy generation data manipulation tool.'
 	s.version     = Solarium::VERSION
 
-	s.executables           = %w(solarium-collect)
+	s.executables           = %w(solarium-chart solarium-collect)
 	s.files                 = Dir["bin/**/*"] + Dir["lib/**/*.rb"]
 	s.required_ruby_version = '>= 2.1.0'
 	s.license               = 'Apache-2.0'
