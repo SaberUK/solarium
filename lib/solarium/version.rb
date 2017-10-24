@@ -9,7 +9,7 @@ module Solarium
 	VERSION_MINOR = 2
 
 	# Public: The version number which is incremented when bugs are fixed.
-	VERSION_PATCH = 0
+	VERSION_PATCH = 1
 
 	# Public: The version label which describes the status of the build.
 	VERSION_LABEL = nil
