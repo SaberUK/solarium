@@ -43,7 +43,6 @@ database = Solarium::Database.new options[:database_url]
 unless database.error.nil?
 	STDERR.puts "A fatal error was encountered whilst connecting to the database:"
 	STDERR.puts "#{database.error.class}: #{database.error.message}"
-	STDERR.puts database.error.backtrace
 	exit 1
 end
 

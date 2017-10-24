@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
 	s.version     = Solarium::VERSION
 
 	s.executables           = %w(solarium-chart solarium-collect)
-	s.files                 = Dir["bin/**/*"] + Dir["lib/**/*.rb"]
+	s.files                 = Dir["bin/**/*"] + Dir["lib/**/*.*"]
 	s.required_ruby_version = '>= 2.1.0'
 	s.license               = 'Apache-2.0'
 
